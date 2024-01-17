@@ -1,0 +1,210 @@
+/* home.component.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #000;
+    color: #fff;
+}
+
+header {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-and-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-and-info h1 {
+    font-size: 32px; /* Ingrandito il nome del sito */
+    margin-bottom: 0.2em; /* Ridotto lo spazio sotto il nome del sito */
+}
+
+.logo-and-info p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Allineato a destra */
+    padding: 1em;
+    width: 50%; /* Larghezza ridotta per centrare il testo a sinistra */
+}
+
+.search-bar input {
+    padding: 0.5em;
+    margin-right: 0.5em;
+}
+
+.search-bar img.icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Aggiunta stile per il carrello e icona del login */
+.cart-icon,
+.login-icon {
+    width: 32px;
+    height: 32px;
+    margin-left: 0.5em; /* Aggiunto spazio tra le icone del login e del carrello */
+}
+
+  
+/* Modifica il CSS per il menu di navigazione */
+
+nav {
+    background-color: #000;
+    padding: 0.5em;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center; /* Allinea gli elementi al centro lungo l'asse trasversale (verticale) */
+    margin: 0; /* Rimuovi il margine del contenitore ul */
+    padding: 0; /* Rimuovi il padding del contenitore ul */
+}
+
+nav li {
+    flex: 1; /* Fai sì che le voci del menu si espandano e riempiano lo spazio disponibile */
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    padding: 0.5em;
+    display: block; /* Rendi l'elemento "blocco" per riempire l'intero spazio disponibile */
+    text-align: center; /* Allinea il testo al centro orizzontalmente */
+    border-radius: 5px; /* Aggiungi bordi arrotondati */
+    font-size: 16px; /* Imposta la dimensione del testo */
+    font-weight: bold; /* Imposta il testo in grassetto */
+}
+
+/* Stile per evidenziare l'elemento selezionato (se necessario) */
+nav a:hover,
+nav a:focus,
+nav a:active {
+    background-color: #555; /* Cambia il colore di sfondo al passaggio del mouse o al clic */
+    transition: background-color 0.3s;
+}
+
+
+
+/* Aggiunta stile per la sezione degli ultimi arrivi */
+section.latest-arrivals {
+    padding: 2em;
+    margin-top: 2em;
+    background-image: url('https://i.pinimg.com/originals/db/18/b6/db18b62467059a01980e410e0ecedc3d.png');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    position: relative;
+}
+
+/* Barra bianca con scritta "Ultimi Arrivi" */
+.latest-arrivals-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Sfondo bianco */
+    padding: 1em; /* Aggiunto padding per spaziatura */
+}
+
+.latest-arrivals h2 {
+    color: #000; /* Colore del testo nero */
+    font-size: 3em; /* Dimensione del testo aumentata */
+    font-weight: bold; /* Grassetto */
+    display: inline-block;
+    padding: 0.5em;
+    margin: 0 auto;
+}
+
+.product-carousel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.product {
+    border: 1px solid #fff;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.7); /* Nero con opacità del 70% */
+    transition: transform 0.3s ease-in-out;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.product {
+    position: relative;
+    overflow: hidden;
+}
+
+.buy-button {
+    position: absolute;
+    bottom: 10px; /* Distanza dal fondo */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.product:hover .buy-button {
+    background-color: #000;
+    color: #fff;
+}
+
+.product-details {
+    position: absolute;
+    bottom: 50px; /* Distanza verticale dal contenitore */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 0 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+.buy-button-dark-mocha {
+    display: block;
+    margin: 10px auto 0;
+}
+
+/* Footer style */
+footer {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+}
