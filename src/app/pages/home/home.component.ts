@@ -1,5 +1,3 @@
-// home.component.ts
-
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,19 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  isJordanDropdownVisible = false;
-  isNikeDropdownVisible = false;
-  isAdidasDropdownVisible = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  // Funzione per mostrare/nascondere la tendina
-  toggleDropdown(category: string) {
-    this.isJordanDropdownVisible = category === 'jordan' ? !this.isJordanDropdownVisible : true;
-    this.isNikeDropdownVisible = category === 'nike' ? !this.isNikeDropdownVisible : false;
-    this.isAdidasDropdownVisible = category === 'adidas' ? !this.isAdidasDropdownVisible : false;
-  }
 }

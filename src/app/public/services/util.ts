@@ -6,7 +6,6 @@ export namespace Util {
     export const cartServerUrl = 'http://localhost:9090/api/cart';
     export const ordersServerUrl = 'http://localhost:9090/api/orders';
     export const productServerUrl = 'http://localhost:9090/api/product';
-  
   }
   export interface LoginResponse{
     id:string,
