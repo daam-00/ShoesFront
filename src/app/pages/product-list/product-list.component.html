@@ -1,25 +1,38 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
 <h1>Catalog</h1>
-<div class="container">
-    <div class="row clearfix">
-        <ng-container *ngFor="let product of products">
-            <div class="col-lg-3 col-md-4 col-sm-12" *ngIf="product.stock > 0">
-                <div class="card product_item">
-                    <div class="body">
-                        <div class="cp_img">
-                            <img src="{{ product.imageUrl }}" alt="Product" class="img-fluid" [routerLink]="['/product', product.id]">
-                        </div>
-                        <div class="product_details">
-                            <h5>{{ product.brand }}</h5>
-                            <h6>{{ product.model }}</h6>
-                            <ul class="product_price list-unstyled">
-                                <li class="price">€{{ product.price }}</li>
-                            </ul>
-                            <button (click)="addToCart(product)">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+
+<div class="product-grid">
+  <ng-container *ngFor="let product of products">
+    <div class="product_item" *ngIf="product.stock > 0">
+      <div class="cp_img">
+        <img class="media"
+             [src]="product.imageUrl"
+             [alt]="product.model"
+             [routerLink]="['/product', product.id]" />
+      </div>
+
+     <div class="product_details">
+  <!-- colonna sinistra: testo -->
+  <div class="meta">
+    <h5 class="brand">{{ product.brand }}</h5>
+    <p class="model muted">• {{ product.model }}</p>
+    <p class="price-strong">€{{ product.price }}</p>
+  </div>
+
+  <!-- colonna destra: bottoni verticali -->
+  <div class="actions-vertical">
+    <button class="btn pill primary" (click)="addToCart(product)">Add to Cart</button>
+    <a class="btn pill secondary" [routerLink]="['/product', product.id]">Details</a>
+  </div>
+
+  <!-- riga sotto (a sinistra) -->
+  <div class="sizes" *ngIf="product.size">
+    <span class="label">Size:</span>
+    <span class="chip">{{ product.size }}</span>
+  </div>
+  <p class="stock" *ngIf="product.stock !== null && product.stock !== undefined">Stock: {{ product.stock }}</p>
+</div>
     </div>
+  </ng-container>
 </div>

@@ -1,30 +1,47 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-<br/>
-<h1>Results</h1>
-<br/>
-<div class="container">
-    <div class="row clearfix">
-        <ng-container *ngFor="let product of products">
-            <div class="col-lg-3 col-md-4 col-sm-12">
-                <div class="card product_item">
-                    <div class="body">
-                        <div class="cp_img">
-                            <img src="{{ product.imageUrl }}" alt="Product" class="img-fluid">
-                            <div class="hover">
-                                <a [routerLink]="['/product', product.id]" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-plus"></i></a>
-                                <a (click)="addToCart(product)" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart"></i></a>
-                            </div>
-                        </div>
-                        <div class="product_details">
-                            <h5>{{ product.brand }}</h5>
-                            <h6>{{ product.model }}</h6>
-                            <ul class="product_price list-unstyled">
-                                <li class="price">€{{ product.price }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+<section class="results">
+    <!-- Header -->
+    <header class="results__head">
+      <h1>Risultati <span *ngIf="query">per “{{ query }}”</span></h1>
+      <div class="results__meta" *ngIf="!loading">
+        <span class="count">{{ products.length }}</span> articoli
+      </div>
+    </header>
+  
+    <!-- Loading -->
+    <div class="state" *ngIf="loading">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Sto cercando i prodotti…</p>
     </div>
-</div>
+  
+    <!-- Empty -->
+    <div class="state" *ngIf="!loading && !products.length">
+      <p>Nessun prodotto trovato per “{{ query }}”.</p>
+      <a routerLink="/products" class="btn btn--ghost">Vai al catalogo</a>
+    </div>
+  
+    <!-- Grid risultati -->
+    <div class="cards" *ngIf="!loading && products.length">
+      <article class="card" *ngFor="let product of products; trackBy: trackById">
+        <a class="card__media" [routerLink]="['/product', product.id]">
+          <img [src]="product.imageUrl" [alt]="product.brand + ' ' + product.model" />
+        </a>
+  
+        <div class="card__body">
+          <h3 class="card__title">
+            {{ product.brand }} <span class="muted">• {{ product.model }}</span>
+          </h3>
+          <div class="card__meta">
+            <span *ngIf="product.color" class="muted">{{ product.color }}</span>
+          </div>
+  
+          <div class="card__footer">
+            <strong class="price">{{ product.price | currency:'EUR' }}</strong>
+            <div class="actions">
+              <button type="button" class="btn btn--ghost" (click)="addToCart(product)">Add</button>
+              <a class="btn" [routerLink]="['/product', product.id]">Dettagli</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>

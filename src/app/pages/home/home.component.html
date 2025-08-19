@@ -1,1 +1,88 @@
-<app-product-list></app-product-list>
+<section class="home">
+
+    <!-- HERO FULL-WIDTH SLIDER -->
+    <div class="hero"
+         role="region" aria-roledescription="carousel" aria-label="Sneakers highlights"
+         (mouseenter)="pause()" (mouseleave)="play()"
+         (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+  
+      <!-- Testo sovrapposto con overlay -->
+      <div class="hero__copy">
+        <h1>Welcome on <span>DoubleClutch</span></h1>
+        <p>Best sneakers, curated drops, fast shipping.</p>
+        <a routerLink="/products" class="btn btn--primary">Go to Catalog</a>
+      </div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+  
+      <!-- Viewport -->
+      <div class="hero__viewport"
+           [style.transform]="'translateX(-' + currentSlide * 100 + '%)'"
+           [attr.aria-live]="timer ? 'off' : 'polite'">
+        <div class="hero__slide"
+             *ngFor="let img of sliderImages; let i = index"
+             [attr.aria-hidden]="currentSlide !== i">
+          <picture>
+            <source [srcset]="img.src + '&w=1600'" media="(min-width: 1024px)">
+            <img [src]="img.src + '&w=1200'"
+                 [alt]="img.alt"
+                 loading="eager"
+                 fetchpriority="high"
+                 decoding="async">
+          </picture>
+        </div>
+      </div>
+  
+      <!-- Controls -->
+      <button class="hero__ctrl hero__ctrl--prev"
+              type="button" (click)="prev()" aria-label="Previous slide">‹</button>
+      <button class="hero__ctrl hero__ctrl--next"
+              type="button" (click)="next()" aria-label="Next slide">›</button>
+  
+      <!-- Dots -->
+      <div class="hero__dots" role="tablist">
+        <button *ngFor="let _ of sliderImages; let i = index"
+                class="hero__dot"
+                [class.is-active]="i === currentSlide"
+                role="tab"
+                [attr.aria-selected]="i === currentSlide"
+                [attr.aria-controls]="'slide-'+i"
+                [attr.aria-label]="'Go to slide ' + (i+1)"
+                type="button"
+                (click)="goTo(i)"></button>
+      </div>
+    </div>
+  
+    <!-- FEATURED -->
+    <section class="featured">
+      <div class="featured__head">
+        <h2>Prodotti in Evidenza</h2>
+        <a class="featured__all" routerLink="/products" aria-label="Vai al catalogo">Vedi tutto</a>
+      </div>
+  
+      <div class="cards cards--2">
+        <article class="card" *ngFor="let p of featuredProducts; trackBy: trackById">
+          
+          <!-- immagine -->
+          <a class="card__media" [routerLink]="['/product', p.id]">
+            <img [src]="p.imageUrl" [alt]="p.brand + ' ' + p.model" loading="lazy" />
+          </a>
+  
+          <!-- testo -->
+          <div class="card__body">
+            <h3 class="card__title">
+              {{ p.brand }} <span class="muted">• {{ p.model }}</span>
+            </h3>
+            <div class="card__meta">
+              <span *ngIf="p.color" class="muted">{{ p.color }}</span>
+              <span *ngIf="p.size" class="muted" [style.marginLeft.px]="p.color ? 6 : 0">{{ p.size }}</span>
+            </div>
+            <div class="card__footer">
+              <strong class="price">{{ p.price | currency:'EUR' }}</strong>
+              <a class="btn btn--ghost" [routerLink]="['/product', p.id]">Dettagli</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  
+  </section>

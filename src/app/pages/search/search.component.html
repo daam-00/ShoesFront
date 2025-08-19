@@ -1,10 +1,63 @@
-<form class="form-header" (ngSubmit)="doSearch(myInput.value)">
-    <input
-      #myInput
-      (keyup.enter)="doSearch(myInput.value)"
-      class="au-input au-input-xl"
-      type="text"
-      placeholder="Search..."
-    />
-    <button class="au-btn-submit" type="submit">Search</button>
-  </form>
+<form class="searchbar" (ngSubmit)="onSubmit()" [class.is-focused]="focused">
+  <!-- lente -->
+  <span class="searchbar__icon" aria-hidden="true"></span>
+
+  <!-- input -->
+  <input
+    #q
+    class="searchbar__input"
+    type="text"
+    [value]="query"
+    (focus)="focused = true; open = true"
+    (blur)="onBlur()"
+    (input)="onInput($event)"
+    (keydown)="onKey($event)"
+    placeholder="Search..."
+    aria-label="Search"
+    autocomplete="off"
+  />
+
+  <!-- clear -->
+  <button
+    *ngIf="query"
+    class="searchbar__clear"
+    type="button"
+    aria-label="Clear search"
+    (click)="clear(q)">
+    ✕
+  </button>
+
+
+  <!-- dropdown risultati -->
+  <div class="searchbar__panel" *ngIf="open">
+    <ng-container *ngIf="loading">
+      <div class="searchbar__state">Searching…</div>
+    </ng-container>
+
+    <ng-container *ngIf="!loading && results.length">
+      <ul class="results" role="listbox">
+        <li
+          *ngFor="let p of results; let i = index; trackBy: trackById"
+          class="result"
+          [class.is-active]="i === activeIndex"
+          (mousedown)="goTo(p.id)"
+          role="option"
+          [attr.aria-selected]="i === activeIndex">
+          <img class="result__img" [src]="p.imageUrl" [alt]="p.model" />
+          <div class="result__info">
+            <div class="result__title" [innerHTML]="highlight(p.brand + ' ' + p.model)"></div>
+            <div class="result__meta">
+              <span *ngIf="p.color">{{ p.color }}</span>
+              <span *ngIf="p.price" class="result__price">{{ p.price | currency:'EUR' }}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <button class="panel__footer" type="button" (mousedown)="onSubmit()">Show all results</button>
+    </ng-container>
+
+    <ng-container *ngIf="!loading && !results.length && query">
+      <div class="searchbar__state">No results for “{{ query }}”.</div>
+    </ng-container>
+  </div>
+</form>

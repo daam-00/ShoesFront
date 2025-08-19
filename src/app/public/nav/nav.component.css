@@ -1,91 +1,468 @@
-@import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
-
-body {
-    background-color: #f2f2f2;
-    font-family: "Lato";
-    font-weight: 300;
-    font-size: 16px;
-    color:#555;
-
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling:touch;
-
-    margin-top:60px;
+/* navbar.component.css */
+:root {
+  --nav-h: 64px;
+  --bg: hsla(0,0%,100%,0.65);
+  --border: #e6e8ef;
+  --text: #111;
+  --primary: #1a73e8;
 }
-.nav-menu {
-  width:100%;
-  justify-content: center;
+
+/* NAV container */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff !important; /* Opaco, senza trasparenza */
+  color: #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 12px rgba(16, 24, 40, 0.06);
+}
+.nav.is-scrolled {
+  background: hsla(0,0%,100%,0.85);
+  border-color: var(--border);
+  box-shadow: 0 6px 20px rgba(16,24,40,.06);
+}
+
+.nav__inner {
+  height: var(--nav-h);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-}
-.nav img{
-  height :45px;
-  color:white;
-  -webkit-filter: invert(1)
+  gap: 16px;
 }
 
-.nav-menu-icons{
+.nav__logo { width: 28px; height: 28px; }
+
+/* Links */
+.nav__links {
   display: flex;
-  margin-left:auto;
-  float: right;
-  color: white;
-  text-align: center;
-  align-items: center;
-  /* padding: 16px 16px 10px 16px; */
-  /* margin-right: 10px; */
+  gap: 18px;
+  justify-content: center;
+}
+.nav__links a {
+  position: relative;
+  color: var(--text);
   text-decoration: none;
-  padding:0px 10px 0px 10px;
-  font-size: 15px;
-  height:45px;
-  font-family: helvetica;
-  font-weight: bold;
+  font-weight: 500;
+  padding: 8px 2px;
+  transition: color .2s ease;
+}
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nav__links a:hover { color: var(--primary); }
+.nav__links a:hover::after { transform: scaleX(1); }
+.nav__links a.active { color: var(--primary); }
+.nav__links a.active::after { transform: scaleX(1); }
+
+/* Actions (icona profilo, carrello, ecc.) */
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav__icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background .2s ease, transform .1s ease;
+}
+.nav__icon-btn:hover {
+  background: rgba(0,0,0,.05);
+  transform: translateY(-1px);
+}
+.badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6{
-    font-family: Raleway;
-    font-weight: 300;
-    color:#333;
+/* Bottoni */
+.btn {
+  cursor: pointer;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all .2s;
+  text-decoration: none;
+}
+.btn:hover { border-color: var(--primary); color: var(--primary); }
+.btn--pill { border-radius: 999px; }
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  position: relative;
+}
+.hamburger span {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background: #111;
+  transition: transform .25s, opacity .2s;
+}
+.hamburger span:nth-child(1) { top: 12px; }
+.hamburger span:nth-child(2) { top: 19px; }
+.hamburger span:nth-child(3) { top: 26px; }
+.hamburger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-p{
-    line-height:28px;
-    margin-bottom: 25px;
+/* Dropdown menu */
+.dropdown__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 180px;
+  padding: 8px 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 20;
+}
+.dropdown:hover .dropdown__menu,
+.dropdown__menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown__item {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background .2s, color .2s;
+}
+.dropdown__item:hover {
+  background: rgba(0,0,0,0.05);
+  color: var(--primary);
+  border-radius: 4px;
 }
 
-.centered{
-    text-align: center;
+/* Miglior focus per accessibilità */
+.nav__links a:focus-visible,
+.dropdown__item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-a{
-    color:#000000;
+/* Mobile nav */
+@media (max-width: 900px) {
+  .nav__links { display: none; }
+  .hamburger { display: inline-block; }
+  .nav__links.is-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 20px;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: slideDown .3s ease;
+  }
+}
+@keyframes slideDown {
+  from { transform: translateY(-15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-a:hover, a:focus{
-    color:#7b7b7b;
-    text-decoration: none;
-    outline: 0;
+
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+/* ------ RESET RAPIDO COLORI/CONTRASTO ------ */
+:root{
+  --nav-h: 64px;
+  --bg: #ffffffee;          /* nav chiara, leggibile */
+  --text: #1f2937;          /* grigio scuro */
+  --border: #e5e7eb;
+  --primary: #1a73e8;
 }
 
-hr{
-    display:block;
-    height:1px;
-    border:0px;
-    border-top:1px solid #ccc;
-    margin:1em 0;
-    padding:0;
+/* Contenitore nav ben definito */
+.nav{
+  background: var(--bg);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(16,24,40,.06);
 }
 
-.navbar {
-    font-weight: 800;
-    font-size:26px;
-    padding-top:15px;
-    padding-bottom:15px;
+/* Brand + link: colori netti */
+.nav__brand, .nav__links a{ color: var(--text); }
+.nav__links a:hover, .nav__links a.active{ color: var(--primary); }
+.nav__links a::after{ background: var(--primary); }
+
+/* Spaziature più ariose */
+.nav__inner{ padding: 0 20px; gap: 20px; }
+.nav__links{ gap: 22px; }
+
+/* Pill “Genres” armonizzata con nav chiara */
+.btn{ background:#fff; border:1px solid var(--border); color: var(--text); }
+.btn:hover{ border-color: var(--primary); color: var(--primary); }
+
+/* Icona profilo */
+.nav__icon-btn{ color: var(--text); }
+.nav__icon-btn:hover{ background: rgba(0,0,0,.06); }
+
+/* ------ SEARCH allineata e dimensionata ------ */
+/* Il componente <app-search> è figlio: stilizziamo il contenitore */
+.nav__actions form{ margin-left: auto; }
+app-search{ display:block; width: 280px; }
+
+/* ------ MOBILE ------ */
+@media (max-width: 900px){
+  .nav__links.is-open{
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px 18px;
+  }
+  app-search{ width: 100%; } /* search full width su mobile */
 }
 
-.navbar-inverse {
-    background: #2d2d2d;
-    border-color:#2d2d2d;
+
+/* ==== FIX DROPDOWN ==== */
+.dropdown { position: relative; }
+
+/* il menu deve essere compatto e leggero */
+.dropdown__menu{
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  list-style: none;           /* niente • */
+  margin: 0;
+  padding: 8px;               /* compatto */
+  min-width: 200px;
+  max-height: 280px;          /* non esplodere in altezza */
+  overflow: auto;             /* scroll se troppo lungo */
+  background: #fff;           /* chiaro per massima leggibilità */
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(16,24,40,.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 100;               /* sopra le card */
 }
 
-.body .navbar .container-fluid a.navbar-brand img{
-  width: 10px;
+/* apertura: hover desktop + toggle TS */
+.dropdown:hover .dropdown__menu,
+.dropdown__menu.is-open{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* voci menu */
+.dropdown__menu li{ margin: 0; }
+.dropdown__item{
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;        /* niente a capo indesiderato */
+  transition: background .15s ease, color .15s ease;
+}
+.dropdown__item:hover{
+  background: #f3f4f6;
+  color: #1a73e8;
+}
+
+/* Evita che lo stile dark scurisca di nuovo la tendina */
+@media (prefers-color-scheme: dark){
+  .dropdown__menu{
+    background: #111;         /* scuro ma leggibile */
+    color: #e5e7eb;
+    border-color: #2b3038;
+    box-shadow: 0 16px 32px rgba(0,0,0,.45);
+  }
+  .dropdown__item:hover{ background: #1f2735; color: #8ab4ff; }
+}
+/* --- Dropdown: niente gap tra trigger e menu --- */
+.dropdown{ position: relative; display: inline-block; }
+
+/* il menu tocca subito il trigger */
+.dropdown__menu{
+  top: 100%;                 /* invece di calc(100% + 8px) */
+  margin-top: 0;
+  pointer-events: auto;
+}
+
+/* resta aperto quando: hover sul wrapper, focus dentro, o toggle TS .is-open */
+.dropdown:hover .dropdown__menu,
+.dropdown:focus-within .dropdown__menu,
+.dropdown__menu.is-open{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* facoltativo: se vuoi un “ponte” invisibile anti-gap durante l’animazione */
+.dropdown::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  top:100%;
+  height: 6px;              /* piccola area “ponte” */
+}
+/* Dropdown coerente: solo su click, resta aperta finché non clicchi fuori */
+.dropdown { position: relative; display: inline-block; }
+.dropdown__menu{
+  position:absolute;
+  top:100%; left:0;
+  list-style:none; margin:0; padding:8px;
+  min-width:200px; max-height:280px; overflow:auto;
+  background:#fff; color:#1f2937;
+  border:1px solid var(--border); border-radius:10px;
+  box-shadow:0 10px 24px rgba(16,24,40,.12);
+  opacity:0; visibility:hidden; transform: translateY(8px);
+  transition: opacity .2s ease, transform .2s ease;
+  z-index:100;
+}
+.dropdown__menu.is-open{
+  opacity:1; visibility:visible; transform: translateY(0);
+}
+.dropdown__menu li{ margin:0; }
+.dropdown__item{
+  display:block; padding:8px 10px; border-radius:8px;
+  color:inherit; text-decoration:none; white-space:nowrap;
+  transition: background .15s ease, color .15s ease;
+}
+.dropdown__item:hover{ background:#f3f4f6; color: var(--primary); }
+
+/*  */
+@media (prefers-color-scheme: dark){
+  .dropdown__menu{ background:#111; color:#e5e7eb; border-color:#2b3038; box-shadow:0 16px 32px rgba(0,0,0,.45); }
+  .dropdown__item:hover{ background:#1f2735; color:#8ab4ff; }
+}
+/* NAVBAR BASE */
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Links centrali */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0; /* non si comprimono troppo */
+}
+
+/* Barra di ricerca */
+.nav__search {
+  flex: 1;                   /* cresce e prende lo spazio disponibile */
+  max-width: 420px;          /* limite massimo per non esplodere su schermi grandi */
+  display: flex;
+  align-items: center;
+}
+
+.nav__search app-search {
+  flex: 1;
+  width: 100%;
+}
+
+/* Icona profilo */
+.nav__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  text-decoration: none;
+}
+
+/* Mobile: search sotto menu */
+@media (max-width: 768px) {
+  .nav__inner {
+    flex-wrap: wrap;
+  }
+  .nav__search {
+    flex: 1 1 100%;
+    max-width: 100%;
+    order: 3;
+    margin-top: 10px;
+  }
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* spinge estremità */
+  padding: 0 20px;
+  gap: 20px;
+}
+
+/* Brand all’estrema sinistra */
+.nav__brand {
+  margin-right: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Azioni all’estrema destra */
+.nav__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
 }
